@@ -49,3 +49,10 @@ def unauthorized_handler(error):
 @jwt.invalid_token_loader
 def invalid_token_callback(token):
     return Unauthorized("Invalid Token")
+from .controllers.fileuploader import File_Uploader_blueprint
+from .controllers.auth import Auth_blueprint
+from .controllers.account import Account_blueprint
+# Page controller blueprint
+app.register_blueprint(File_Uploader_blueprint, url_prefix = "/api/fileuploader")
+app.register_blueprint(Auth_blueprint, url_prefix = "/api/auth")
+app.register_blueprint(Account_blueprint, url_prefix = "/api/account")
