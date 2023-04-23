@@ -1,6 +1,7 @@
 from app import db
 from wtforms import Form, StringField
 from wtforms.validators import *
+from ..helpers.utils import OptionalButNotEmpty
 
 
 class User(db.Model):
@@ -53,6 +54,6 @@ class UserRegisterForm(Form):
 
 
 class UserAccountEditForm(Form):
-    firstname = StringField('Firstname', [InputRequired()])
+    firstname = StringField('Firstname', [OptionalButNotEmpty()])
     lastname = StringField('Lastname', [])
-    profile_image = StringField('Profile Image', [InputRequired()])
+    profile_image = StringField('Profile Image', [OptionalButNotEmpty()])
