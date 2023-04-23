@@ -101,10 +101,10 @@ class Uploader:
             return new_file_path
         return file
 
-    # get file name use to save the uploaded files
     def get_filename(self, file, index):
-        filename_type = self.upload_setting.get('filename_type', "random")
-        filename = ""
+        filename_type = self.upload_setting.get('filename_type', "original")
+        file_ext = file.filename.rsplit('.', 1)[1].lower()
+
         if filename_type == 'date':
             filename = time.strftime("%Y-%m-%d-%H-%M-%S") + "-" + str(index)
         elif filename_type == 'timestamp':
@@ -116,7 +116,19 @@ class Uploader:
             filename = str(len(os.listdir(cwd)) + 1)
         else:
             filename = str(uuid.uuid4())
-        return filename
+
+        # Check for existing files with the same name and append a unique suffix
+        i = 1
+        unique_filename = filename
+        file_path = os.path.join(app_root, assets_dir, self.upload_dir, unique_filename + '.' + file_ext)
+
+        while os.path.exists(file_path):
+            unique_filename = f"{filename}_{i}"
+            file_path = os.path.join(app_root, assets_dir, self.upload_dir, unique_filename + '.' + file_ext)
+            i += 1
+
+        return unique_filename
+
 
     # create new directory if not exist
     def make_dir(self, dir_name):
