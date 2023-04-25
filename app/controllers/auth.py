@@ -1,15 +1,9 @@
-
-
-from flask import Blueprint, redirect
-
-from datetime import datetime, timedelta
-from app import db, config, jsonify, request
+from flask import Blueprint
+from datetime import timedelta
+from app import config, jsonify, request
 from ..helpers.http_errors import InternalServerError, BadRequest
 from ..helpers.utils import PasswordUtils, FileUtils, ValidationUtils
-
-
-
-from flask_jwt_extended import create_access_token, decode_token
+from flask_jwt_extended import create_access_token
 from ..models.user import *
 
 

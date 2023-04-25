@@ -1,5 +1,5 @@
 from flask import Blueprint
-from app import db, jsonify, request, jwt_required, current_user
+from app import jsonify, request, jwt_required, current_user
 from ..helpers.http_errors import InternalServerError, BadRequest, ResourceNotFound
 from ..helpers.utils import FileUtils
 from ..models.user import *

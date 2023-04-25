@@ -23,7 +23,7 @@ UPLOAD_DIR = 'uploads/'
 UPLOAD_TEMP_DIR = 'uploads/temp/'
 MAX_CONTENT_LENGTH = 16777216
 
-JWT_DURATION = 30  # OTP Duration in minutes
+JWT_DURATION = 60  # OTP Duration in minutes
 
 # Page upload settings
 UPLOAD_SETTINGS = dict(
