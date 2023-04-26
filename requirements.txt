@@ -1,0 +1,10 @@
+Flask==2.1.0
+flask-wtf==0.14.3
+flask-jwt-extended==4.3.1
+flask-sqlalchemy==2.5.1
+Werkzeug~=2.0.0
+flask-cors==3.0.8
+flask-bcrypt==0.7.1
+Pillow==9.2.0
+Flask-Excel==0.0.7
+requests==2.27.1

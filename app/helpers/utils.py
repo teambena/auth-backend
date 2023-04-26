@@ -23,11 +23,11 @@ class PasswordUtils:
 
     @staticmethod
     def check_password_history(new_password, password_history, history_limit):
-        new_password_hash = PasswordUtils.hash_password(new_password)
-        for old_password_hash in password_history[-history_limit:]:
-            if new_password_hash == old_password_hash:
+        for old_password in password_history[-history_limit:]:
+            if PasswordUtils.check_password(old_password, new_password):
                 return True
         return False
+
 
 class FileUtils:
 
