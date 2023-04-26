@@ -1,3 +1,5 @@
+from sqlalchemy.dialects.sqlite import JSON
+
 from app import db
 from wtforms import Form, StringField
 from wtforms.validators import *
@@ -12,6 +14,7 @@ class User(db.Model):
     firstname = db.Column("firstname", db.String)
     lastname = db.Column("lastname", db.String)
     profile_image = db.Column("profile_image", db.String)
+    password_history = db.Column("password_history", JSON)
 
     def get_id(self):
         return str(self.id)
@@ -36,12 +39,6 @@ class User(db.Model):
 class PasswordForm(Form):
     confirm_password = StringField('Confirm password', [InputRequired()])
     password = StringField('New Password', [InputRequired(), EqualTo('confirm_password', message='Passwords confirmation does not match')])
-
-
-class ChangePasswordForm(Form):
-    oldpassword = StringField('Old password', [InputRequired()])
-    confirmpassword = StringField('Confirm password', [InputRequired()])
-    newpassword = StringField('New Password', [InputRequired(), EqualTo('confirmpassword', message='Passwords confirmation does not match')])
 
 
 class UserRegisterForm(Form):

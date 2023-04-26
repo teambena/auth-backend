@@ -56,3 +56,6 @@ from .controllers.account import Account_blueprint
 app.register_blueprint(File_Uploader_blueprint, url_prefix = "/api/fileuploader")
 app.register_blueprint(Auth_blueprint, url_prefix = "/api/auth")
 app.register_blueprint(Account_blueprint, url_prefix = "/api/account")
+
+with app.app_context():
+    db.create_all()
