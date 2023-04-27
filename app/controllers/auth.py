@@ -2,6 +2,7 @@ from flask import Blueprint
 from datetime import timedelta
 from app import config, jsonify, request
 from ..helpers.http_errors import InternalServerError, BadRequest
+from ..helpers.jsonmultidict import get_json_multidict
 from ..helpers.utils import PasswordUtils, FileUtils, ValidationUtils
 from flask_jwt_extended import create_access_token
 from ..models.user import *
@@ -49,33 +50,35 @@ def login():
 @Auth_blueprint.route('/register', methods=['POST'])
 def register():
     try:
-        modeldata = request.body
-        
+        modeldata = get_json_multidict(request.body)
+
         # move uploaded file from temp directory to destination directory
         if "profile_image" in modeldata:
             file_info = FileUtils.move_uploaded_files(modeldata['profile_image'], "profile_image")
             modeldata['profile_image'] = file_info['filepath']
-         
+
         form = UserRegisterForm(modeldata)
-        errors = [] # form validation errors
-        
+        errors = []  # form validation errors
+
         # validate register form data
         if not form.validate():
             errors.append(form.errors)
-        
+
         if errors:
             return BadRequest(errors)
-        
+
         record = User()
         form.populate_obj(record)
-        record.password = PasswordUtils.hash_password(modeldata['password'])
+        hashed_password = PasswordUtils.hash_password(modeldata['password'])
+        record.password = hashed_password
+        record.password_history = [hashed_password]  # Store the hashed password in the password_history column
 
-        # check if username record already exist in the database
+        # check if username record already exists in the database
         rec_value = str(modeldata['username'])
         rec_exist = ValidationUtils.is_unique(User, "username", rec_value)
         if rec_exist:
             return BadRequest(rec_value + " Already exist!")
-        
+
         # save user records
         db.session.add(record)
         db.session.commit()
