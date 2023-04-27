@@ -1,6 +1,7 @@
 Flask==2.1.0
 flask-wtf==0.14.3
 flask-jwt-extended==4.3.1
+Flask-SQLAlchemy==2.5.1
 Werkzeug~=2.0.0
 flask-cors==3.0.8
 flask-bcrypt==0.7.1
